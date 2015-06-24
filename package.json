@@ -8,7 +8,7 @@
   "activationCommands": {
     "atom-workspace": "copy-paste:toggle"
   },
-  "repository": "https://github.com/atom/copy-paste",
+  "repository": "https://github.com/azat-co/copy-paste",
   "license": "MIT",
   "engines": {
     "atom": ">=0.174.0 <2.0.0"
