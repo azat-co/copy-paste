@@ -2,19 +2,23 @@
 'context-menu':
   'atom-text-editor': [
     {
-      'label': 'Toggle copy-paste'
-      'command': 'copy-paste:toggle'
+      'label': 'Auto Paste'
+      'command': 'copy-paste:paste'
     }
   ]
 'menu': [
   {
     'label': 'Packages'
     'submenu': [
-      'label': 'copy-paste'
+      'label': 'Copy Paste'
       'submenu': [
         {
-          'label': 'Toggle'
-          'command': 'copy-paste:toggle'
+          'label': 'Auto Paste'
+          'command': 'copy-paste:paste'
+        }
+        {
+          'label': 'Stop'
+          'command': 'copy-paste:stop'
         }
       ]
     ]

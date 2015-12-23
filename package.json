@@ -5,7 +5,7 @@
   "description": "Record screencasts like a pro with this copy paste package for Atom. Simply copy the code and it will be inserted character by character into the Atom editor with random delay.",
   "keywords": [],
   "activationCommands": {
-    "atom-workspace": "copy-paste:toggle"
+    "atom-workspace": "copy-paste:paste"
   },
   "repository": "https://github.com/azat-co/copy-paste",
   "license": "MIT",

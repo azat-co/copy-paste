@@ -12,7 +12,7 @@ describe "CopyPaste", ->
     workspaceElement = atom.views.getView(atom.workspace)
     activationPromise = atom.packages.activatePackage('copy-paste')
 
-  describe "when the copy-paste:toggle event is triggered", ->
+  describe "when the copy-paste:paste event is triggered", ->
     it "hides and shows the modal panel", ->
       # Before the activation event the view is not on the DOM, and no panel
       # has been created
@@ -20,7 +20,7 @@ describe "CopyPaste", ->
 
       # This is an activation event, triggering it will cause the package to be
       # activated.
-      atom.commands.dispatch workspaceElement, 'copy-paste:toggle'
+      atom.commands.dispatch workspaceElement, 'copy-paste:paste'
 
       waitsForPromise ->
         activationPromise
@@ -33,7 +33,7 @@ describe "CopyPaste", ->
 
         copyPastePanel = atom.workspace.panelForItem(copyPasteElement)
         expect(copyPastePanel.isVisible()).toBe true
-        atom.commands.dispatch workspaceElement, 'copy-paste:toggle'
+        atom.commands.dispatch workspaceElement, 'copy-paste:paste'
         expect(copyPastePanel.isVisible()).toBe false
 
     it "hides and shows the view", ->
@@ -49,7 +49,7 @@ describe "CopyPaste", ->
 
       # This is an activation event, triggering it causes the package to be
       # activated.
-      atom.commands.dispatch workspaceElement, 'copy-paste:toggle'
+      atom.commands.dispatch workspaceElement, 'copy-paste:paste'
 
       waitsForPromise ->
         activationPromise
@@ -58,5 +58,5 @@ describe "CopyPaste", ->
         # Now we can test for view visibility
         copyPasteElement = workspaceElement.querySelector('.copy-paste')
         expect(copyPasteElement).toBeVisible()
-        atom.commands.dispatch workspaceElement, 'copy-paste:toggle'
+        atom.commands.dispatch workspaceElement, 'copy-paste:paste'
         expect(copyPasteElement).not.toBeVisible()
