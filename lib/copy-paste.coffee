@@ -1,5 +1,5 @@
 CopyPasteView = require './copy-paste-view'
-{CompositeDisposable} = require 'atom'
+{Disposable, CompositeDisposable} = require 'atom'
 
 module.exports = CopyPaste =
   copyPasteView: null
@@ -16,8 +16,9 @@ module.exports = CopyPaste =
     # Register command that toggles this view
     # debugger
     @subscriptions.add atom.commands.add 'atom-workspace',
-      'copy-paste:stop': => @stop()
       'copy-paste:paste': => @paste()
+      @subscriptions.add atom.commands.add 'atom-text-editor.copy-paste-active',
+        'copy-paste:stop': => @stop()
     # @subscriptions.add atom.commands.add 'atom-workspace',
     # @subscriptions.add atom.commands.add 'atom-workspace',
 
@@ -25,6 +26,7 @@ module.exports = CopyPaste =
   deactivate: ->
     @modalPanel.destroy()
     @subscriptions.dispose()
+    @activeClassDisposable?.dispose()
     @copyPasteView.destroy()
 
   serialize: ->
@@ -34,16 +36,23 @@ module.exports = CopyPaste =
     # debugger
     @recCall = () ->
       console.log('Pasting stopped')
+      @activeClassDisposable?.dispose()
 
   paste: ->
     # debugger
     console.log 'Pasting in progress!'
     editor = atom.workspace.getActiveTextEditor()
+    editorElement = atom.views.getView(editor)
     code = atom.clipboard.read()
     calls = []
+    editorElement?.classList?.add 'copy-paste-active'
+    @activeClassDisposable = new Disposable ->
+      editorElement?.classList?.remove 'copy-paste-active'
     @recCall = () ->
       if calls.length>0
         calls[0]()
+      else
+        @activeClassDisposable?.dispose()
     calls = Array.prototype.map.call code, (char, index, list) =>
       if char is ' ' and code[index+1] and code[index+1] isnt ' ' then baseDelay = 400
       else if char is ' ' and code[index+1] and code[index+1] is ' ' then baseDelay = 0
